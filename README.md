@@ -8,8 +8,10 @@ A minimal system information tool for Linux-based operating systems.
 Arch <arch>
 Debian <debian>
 Elementary OS <elementary>
+Kiss Linux <kisslinux>
 Linux Lite <linuxlite>
 Linux Mint <linuxmint>
+Raspbian <raspbian>
 Pop!_OS <popos>
 Ubuntu <ubuntu>
 ```
