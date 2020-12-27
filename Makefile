@@ -18,6 +18,10 @@ elementary:
 	$(info Installing...)
 	gcc cfetch-elementary.c -o cfetch && sudo cp cfetch /usr/bin
 
+kisslinux:
+	$(info Installing...)
+	gcc cfetch-kisslinux.c -o cfetch && sudo cp cfetch /usr/bin
+
 linuxlite:
 	$(info Installing...)
 	gcc cfetch-linuxlite.c -o cfetch && sudo cp cfetch /usr/bin
@@ -29,6 +33,10 @@ linuxmint:
 popos:
 	$(info Installing...)
 	gcc cfetch-popos.c -o cfetch && sudo cp cfetch /usr/bin
+
+raspbian:
+	$(info Installing...)
+	gcc cfetch-raspbian.c -o cfetch && sudo cp cfetch
 
 ubuntu:
 	$(info Installing...)
