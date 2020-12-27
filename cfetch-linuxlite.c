@@ -63,7 +63,7 @@ void detectModel() {
 
 // Detects the shell information
 void detectShell() {
-    FILE *shellpath = popen("echo $SHELL", "r");
+    FILE *shellpath = popen("basename $SHELL", "r");
 
     fscanf(shellpath, "%s", shell);
     fclose(shellpath);
@@ -152,7 +152,7 @@ int main() {
     getSysinfo();
 
     // Do not change these
-    // user, os, kernel, model, cpu, ram, shell, pkgs, uptime, pallate colours
+    // user, os, kernel, model, cpu, ram, shell, pkgs, uptime, palette colours
     printf("%s\n          %s%s@%s%s%s\n", bold, user, reset, bold, host, reset);
     printf("%s     /\\   OS%s     %s%s\n", bold, reset, os, reset);
     printf("%s    /  \\  KERNEL%s %s%s\n", bold, reset, kernel, reset);
