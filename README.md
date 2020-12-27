@@ -23,9 +23,12 @@ Copy-paste this into your terminal
 # git clone the repo and go the directory
 git clone https://github.com/clieg/cfetch.git
 
-# install (refer to the list above)
+# Build (refer to the list above)
 # e.g.: make ubuntu
 make <name of the distro>
+
+# Install
+sudo make install
 
 # run
 cfetch

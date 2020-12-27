@@ -3,45 +3,50 @@ clean:
 	rm -rf cfetch
 
 
-# Install cfetch
-# This will copy cfetch to the /usr/bin directory
+# Build cfetch
 # Every distro has its own installation command
 arch:
-	$(info Installing...)
-	gcc cfetch-arch.c -o cfetch && sudo cp cfetch /usr/bin
+	$(info Building...)
+	gcc cfetch-arch.c -o cfetch
 
 debian:
-	$(info Installing...)
-	gcc cfetch-debian.c -o cfetch && sudo cp cfetch /usr/bin
+	$(info Building...)
+	gcc cfetch-debian.c -o cfetch
 
 elementary:
-	$(info Installing...)
-	gcc cfetch-elementary.c -o cfetch && sudo cp cfetch /usr/bin
+	$(info Building...)
+	gcc cfetch-elementary.c -o cfetch
 
 kisslinux:
-	$(info Installing...)
-	gcc cfetch-kisslinux.c -o cfetch && sudo cp cfetch /usr/bin
+	$(info Building...)
+	gcc cfetch-kisslinux.c -o cfetch
 
 linuxlite:
-	$(info Installing...)
-	gcc cfetch-linuxlite.c -o cfetch && sudo cp cfetch /usr/bin
+	$(info Building...)
+	gcc cfetch-linuxlite.c -o cfetch
 
 linuxmint:
-	$(info Installing...)
-	gcc cfetch-linuxmint.c -o cfetch && sudo cp cfetch /usr/bin
+	$(info Building...)
+	gcc cfetch-linuxmint.c -o cfetch
 
 popos:
-	$(info Installing...)
-	gcc cfetch-popos.c -o cfetch && sudo cp cfetch /usr/bin
+	$(info Building...)
+	gcc cfetch-popos.c -o cfetch
 
 raspbian:
-	$(info Installing...)
-	gcc cfetch-raspbian.c -o cfetch && sudo cp cfetch
+	$(info Building...)
+	gcc cfetch-raspbian.c -o cfetch
 
 ubuntu:
-	$(info Installing...)
-	gcc cfetch-ubuntu.c -o cfetch && sudo cp cfetch /usr/bin
+	$(info Building...)
+	gcc cfetch-ubuntu.c -o cfetch
 
+
+# Install cfetch
+# This will copy cfetch to the /usr/bin directory
+install:
+	$(info Installing...)
+	cp -v cfetch /usr/bin
 
 # Uninstall cfetch
 # This will delete cfetch from the /usr/bin/ directory.
