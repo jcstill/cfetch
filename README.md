@@ -4,23 +4,21 @@ A minimal system information tool for Linux-based operating systems.
 
 
 ## Currently supported distros
-```
-Arch <arch>
-Debian <debian>
-Devuan <devuan>
-elementary OS <elementary>
-Fedora <fedora>
-Gentoo Linux <gentoo>
-KISS Linux <kisslinux>
-Linux Lite <linuxlite>
-Linux Mint <linuxmint>
-Manjaro <manjaro>
-MX Linux <mxlinux>
-Pop!_OS <popos>
-Pure OS <pureos>
-Raspbian <raspbian>
-Ubuntu
-```
+* Arch
+* Debian
+* Devuan
+* elementary OS
+* Fedora
+* Gentoo Linux
+* KISS Linux
+* Linux Lite
+* Linux Mint
+* Manjaro
+* MX Linux
+* Pop!_OS
+* Pure OS
+* Raspbian
+* Ubuntu
 
 
 ## Configuration
@@ -29,9 +27,7 @@ Copy-paste this into your terminal
 # git clone the repo then go to the cfetch directory
 git clone https://github.com/clieg/cfetch.git
 
-# build cfetch
-# refer to the list above
-# e.g. make ubuntu
+# compile cfetch
 make <distro name>
 
 # install cfetch
