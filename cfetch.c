@@ -3,14 +3,7 @@
  * Copyright (c) 2020 Clint
  * This programme is provided under the GPL-3.0 License. See LICENSE for more details.
  */
-
-
-
-
-
-// Supported distros
-// Arch Linux, Debian GNU/Linux
-
+ 
 
 
 
