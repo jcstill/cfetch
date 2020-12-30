@@ -7,25 +7,22 @@ A minimal system information tool for Linux-based operating systems.
 ```
 Arch <arch>
 Debian <debian>
-Elementary OS <elementary>
-Kiss Linux <kisslinux>
+elementary OS <elementary>
+Fedora <fedora>
+Gentoo Linux <gentoo>
+KISS Linux <kisslinux>
 Linux Lite <linuxlite>
 Linux Mint <linuxmint>
-Raspbian <raspbian>
 Pop!_OS <popos>
+Raspbian <raspbian>
 Ubuntu <ubuntu>
 ```
 
 
 ## Installation
-Copy-paste this into your terminal
 ```
-# git clone the repo and go the directory
-git clone https://github.com/clieg/cfetch.git
-
-# Build (refer to the list above)
-# e.g.: make ubuntu
-make <name of the distro>
+# Build
+make
 
 # Install
 sudo make install
