@@ -3,7 +3,7 @@
  * Copyright (c) 2020 Clint
  * This programme is provided under the GPL-3.0 License. See LICENSE for more details.
  */
- 
+
 
 
 
@@ -105,29 +105,40 @@ void getpackages() {
 // Print the correct packages and names
 void printpkgs(){
     int comma=0;
-    if(sysinfo.apt != 0){
-        if(comma == 1)printf(", ");
+    if (sysinfo.apt != 0) {
+        if (comma == 1)
+            printf(", ");
         printf("apt: %d", sysinfo.apt);
         comma=1;
     }
-    if(sysinfo.flatpak != 0){
-        if(comma == 1)printf(", ");
+    if (sysinfo.dnf != 0) {
+        if(comma == 1)
+            printf(", ");
+        printf("dnf: %d", sysinfo.dnf);
+        comma=1;
+    }
+    if (sysinfo.flatpak != 0) {
+        if(comma == 1)
+            printf(", ");
         printf("flatpak: %d", sysinfo.flatpak);
         comma=1;
     }
-    if(sysinfo.snap != 0){
-        if(comma == 1)printf(", ");
-        printf("snap: %d", sysinfo.snap);
+    if (sysinfo.kiss != 0) {
+        if(comma == 1)
+            printf(", ");
+        printf("kiss: %d", sysinfo.kiss);
         comma=1;
     }
-    if(sysinfo.pacman != 0){
-        if(comma == 1)printf(", ");
+    if (sysinfo.pacman != 0) {
+        if(comma == 1)
+            printf(", ");
         printf("pacman: %d", sysinfo.pacman);
         comma=1;
     }
-    if(sysinfo.kiss != 0){
-        if(comma == 1)printf(", ");
-        printf("kiss: %d", sysinfo.kiss);
+    if (sysinfo.snap != 0) {
+        if(comma == 1)
+            printf(", ");
+        printf("snap: %d", sysinfo.snap);
         comma=1;
     }
     printf("%s\n", reset);
@@ -304,7 +315,7 @@ int main() {
         printpkgs();
         printf("%s                UPTIME%s %dd, %dh, %dm%s\n", bold, reset, sysinfo.day, sysinfo.hour, sysinfo.min, reset);
         printf("%s                %s██%s██%s██%s██%s██%s██%s██%s██%s\n\n", bold, black, red, green, yellow, blue, magenta, cyan, white, reset);
-    } else if (strstr(sysinfo.os, "Leap") != NULL) {
+    } else if (strstr(sysinfo.os, "SUSE") != NULL) {
         printf("%s\n                 %s%s@%s%s%s\n", bold, sysinfo.username, reset, bold, sysinfo.hostname, reset);
         printf("%s      _______    OS%s     %s%s\n", bold, reset, sysinfo.os, reset);
         printf("%s  -___|   __ \\   KERNEL%s %s%s\n", bold, reset, sysinfo.kernel, reset);
