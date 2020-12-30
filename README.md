@@ -15,6 +15,7 @@ A minimal system information tool for Linux-based operating systems.
 * Linux Mint
 * Manjaro
 * MX Linux
+* OpenSUSE
 * Pop!_OS
 * Pure OS
 * Raspbian
@@ -28,7 +29,7 @@ Copy-paste this into your terminal
 git clone https://github.com/clieg/cfetch.git
 
 # compile cfetch
-make <distro name>
+make compile
 
 # install cfetch
 make install
