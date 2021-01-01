@@ -1,4 +1,4 @@
-# Clean cfetch binary
+# Clean cfetch binary.
 clean:
 	@echo "Cleaning..."
 	rm -rf cfetch
@@ -12,7 +12,7 @@ compile:
 	@echo "Compilation finished!"
 
 
-# Install cfetch
+# Install cfetch.
 # This will copy cfetch to /usr/bin directory.
 install:
 	@echo "Installing cfetch..."
@@ -20,7 +20,7 @@ install:
 	@echo "Installation finished!"
 
 
-# Uninstall cfetch
+# Uninstall cfetch.
 # This will delete cfetch from the /usr/bin/ directory.
 uninstall:
 	@echo "Uninstalling cfetch..."
