@@ -28,7 +28,7 @@ sudo make uninstall
 
 
 ## Author
-Copyright (c) 2020 [Clint](https://github.com/clieg)
+Copyright (c) 2020 - 2021 [Clint](https://github.com/clieg)
 
 
 ## License
