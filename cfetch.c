@@ -11,6 +11,7 @@
 #include <stdio.h>
 #include <string.h>
 
+
 // Colours and text customisation.
 #define reset "\x1b[0m"
 #define bold "\x1b[1m"
