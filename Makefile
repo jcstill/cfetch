@@ -1,7 +1,7 @@
 # Compile cfetch
 compile:
 	@echo "Compiling cfetch..."
-	gcc cfetch.c -o cfetch
+	gcc cfetch.c -o cfetch -Wall
 	@echo "Compilation finished!"
 
 
