@@ -10,17 +10,20 @@ Arch Linux, Debian, Devuan, Elementary OS, Fedora, Gentoo, KISS Linux, Linux Lit
 ## Configuration
 Copy-paste this into your terminal
 ```
-# git clone the repo then go to the cfetch directory
+# Git clone the repo then go to the cfetch directory
 git clone https://github.com/clieg/cfetch.git
 
-# compile cfetch
+# Compile cfetch
 make compile
 
-# install cfetch
+# Install cfetch
 sudo make install
 
-# run cfetch
+# Run cfetch
 cfetch
+
+# Uninstall cfetch
+sudo make uninstall
 ```
 
 
