@@ -1,10 +1,11 @@
 # cfetch
-A minimal system information tool for Linux-based operating systems.
-![cfetch](https://clieg.github.io/images/cfetch.png)
+A tiny system information tool for Linux.
+
+![cfetch](https://raw.githubusercontent.com/clieg/clieg.github.io/master/images/cfetch-new.png)
 
 
 ## Currently supported distros
-Arch Linux, Debian, Devuan, Elementary OS, Fedora, Gentoo, KISS Linux, Linux Lite, Linux Mint, Manjaro, MX Linux, OpenSUSE, Pop!_OS, Pure OS, Raspbian, Ubuntu
+Arch Linux, Debian, Devuan, Elementary OS, Fedora, Gentoo, KISS Linux, Linux Lite, Linux Mint, Manjaro, MX Linux, OpenSUSE, Pop!_OS, Pure OS, Raspbian, Ubuntu (Kubuntu, Lubuntu, Ubuntu Bugie, Ubuntu Cinnamon, Ubuntu Studio, Xubuntu)
 
 
 ## Configuration
@@ -28,7 +29,7 @@ sudo make uninstall
 
 
 ## Author
-Copyright (c) 2020 - 2021 [Clint](https://github.com/clieg)
+Copyright (c) [2020](https://api.github.com/repos/clieg/cfetch) - 2021 [Clint](https://github.com/clieg)
 
 
 ## License
