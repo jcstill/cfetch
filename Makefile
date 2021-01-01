@@ -5,7 +5,7 @@ clean:
 	@echo "Finished!";
 
 
-# Build cfetch
+# Compile cfetch
 compile:
 	@echo "Compiling cfetch..."
 	gcc cfetch.c -o cfetch
@@ -16,7 +16,7 @@ compile:
 # This will copy cfetch to /usr/bin directory.
 install:
 	@echo "Installing cfetch..."
-	sudo cp -v cfetch /usr/bin
+	cp -v cfetch /usr/bin
 	@echo "Installation finished!"
 
 
@@ -24,5 +24,5 @@ install:
 # This will delete cfetch from the /usr/bin/ directory.
 uninstall:
 	@echo "Uninstalling cfetch..."
-	sudo rm -rf /usr/bin/cfetch
+	rm -rf /usr/bin/cfetch
 	@echo "Uninstalling finished!"

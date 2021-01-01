@@ -27,7 +27,9 @@
 // System information variables
 struct sysinfo {
     char username[25], hostname[50], os[50], distro[50], kernel[50], modelname[50], modelversion[50], cpu[50], shell[8];
-    int ramused, ramtotal, apt, dnf, flatpak, kiss, pacman, portage, snap, day, hour, min, sec;
+    int ramused, ramtotal; // ram
+    int apt, dnf, emerge, flatpak, kiss, pacman, rpm, snap, yay, yum, zypper; // packages
+    int day, hour, min, sec; // uptime
 } sysinfo;
 
 // Gets the current user
@@ -76,71 +78,103 @@ void Getshell() {
 }
 
 // Gets the packages
-// Supports the distro's package manager, flatpak, and snap
+// Supports apt, dnf, emerge, flatpak, kiss, pacman, rpm, snap, yay, yum, zypper
 void getpackages() {
     FILE *apt = popen("dpkg-query -f '${binary:Package}\n' -W 2>/dev/null | wc -l", "r");
     FILE *dnf = popen("dnf list installed 2>/dev/null | wc -l", "r");
+    FILE *emerge = popen("qlist -I 2>/dev/null | wc -l", "r");
     FILE *flatpak = popen("flatpak list 2>/dev/null | wc -l", "r");
     FILE *kiss = popen("kiss list 2>/dev/null | wc -l", "r");
     FILE *pacman = popen("pacman -Q 2>/dev/null | wc -l", "r");
-    FILE *portage = popen("port installed 2>/dev/null | wc -l", "r");
+    FILE *rpm = popen("rpm -qa --last 2>/dev/null | wc -l", "r");
     FILE *snap = popen("snap list 2>/dev/null | wc -l", "r");
+    FILE *yay = popen("yay -Q 2>/dev/null | wc -l", "r");
+    FILE *yum = popen("yum list installed 2>/dev/null | wc -l", "r");
+    FILE *zypper = popen("zypper se 2>/dev/null | wc -l", "r");
 
     fscanf(apt, "%d", &sysinfo.apt);
     fscanf(dnf, "%d", &sysinfo.dnf);
+    fscanf(emerge, "%d", &sysinfo.emerge);
     fscanf(flatpak, "%d", &sysinfo.flatpak);
     fscanf(kiss, "%d", &sysinfo.kiss);
     fscanf(pacman, "%d", &sysinfo.pacman);
-    fscanf(portage, "%d", &sysinfo.portage);
+    fscanf(rpm, "%d", &sysinfo.rpm);
     fscanf(snap, "%d", &sysinfo.snap);
+    fscanf(yay, "%d", &sysinfo.yay);
+    fscanf(yum, "%d", &sysinfo.yum);
+    fscanf(zypper, "%d", &sysinfo.zypper);
     fclose(apt);
     fclose(dnf);
+    fclose(emerge);
     fclose(flatpak);
     fclose(kiss);
     fclose(pacman);
-    fclose(portage);
+    fclose(rpm);
     fclose(snap);
+    fclose(yay);
+    fclose(yum);
+    fclose(zypper);
 }
 
 // Print the correct packages and names
 void printpkgs(){
     int comma=0;
     if (sysinfo.apt != 0) {
-        if (comma == 1)
-            printf(", ");
+        if (comma == 1) printf(", ");
         printf("apt: %d", sysinfo.apt);
-        comma=1;
+        comma = 1;
     }
     if (sysinfo.dnf != 0) {
-        if(comma == 1)
-            printf(", ");
+        if(comma == 1) printf(", ");
         printf("dnf: %d", sysinfo.dnf);
-        comma=1;
+        comma = 1;
+    }
+    if (sysinfo.emerge != 0) {
+        if (comma = 1) printf(", ");
+        printf("emerge: %d", sysinfo.emerge);
+        comma = 1;
     }
     if (sysinfo.flatpak != 0) {
-        if(comma == 1)
-            printf(", ");
+        if (comma == 1) printf(", ");
         printf("flatpak: %d", sysinfo.flatpak);
-        comma=1;
+        comma = 1;
     }
     if (sysinfo.kiss != 0) {
-        if(comma == 1)
-            printf(", ");
+        if (comma == 1) printf(", ");
         printf("kiss: %d", sysinfo.kiss);
-        comma=1;
+        comma = 1;
     }
     if (sysinfo.pacman != 0) {
-        if(comma == 1)
-            printf(", ");
+        if (comma == 1) printf(", ");
         printf("pacman: %d", sysinfo.pacman);
-        comma=1;
+        comma = 1;
+    }
+    if (sysinfo.rpm != 0) {
+        if (comma == 1) printf(", ");
+        printf("rpm: %d", sysinfo.rpm);
+        comma = 1;
     }
     if (sysinfo.snap != 0) {
-        if(comma == 1)
-            printf(", ");
+        if (comma == 1) printf(", ");
         printf("snap: %d", sysinfo.snap);
+        comma = 1;
+    }
+    if (sysinfo.yay != 0) {
+        if (comma = 1) printf(", ");
+        printf("yay: %d", sysinfo.yay);
+        comma = 1;
+    }
+    if (sysinfo.yum != 0) {
+        if (comma == 1) printf(", ");
+        printf("yum: %d", sysinfo.yum);
         comma=1;
     }
+    if (sysinfo.zypper != 0) {
+        if (comma == 1) printf(", ");
+        printf("zypper: %d", sysinfo.zypper);
+        comma = 1;
+    }
+
     printf("%s\n", reset);
 }
 
@@ -196,7 +230,7 @@ int main() {
     // Do not change these
     // user, os, kernel, model, cpu, ram, shell, pkgs, uptime, palette colours
     if (strstr(sysinfo.os, "Arch") != NULL) {
-        printf("%s\n                  %s%s@%s%s%s\n", bold, sysinfo.username, reset, bold, sysinfo.hostname, reset);
+        printf("%s                  %s%s@%s%s%s\n", bold, sysinfo.username, reset, bold, sysinfo.hostname, reset);
         printf("%s        /\\        OS%s     %s%s\n", bold, reset, sysinfo.os, reset);
         printf("%s       /  \\       KERNEL%s %s%s\n", bold, reset, sysinfo.kernel, reset);
         printf("%s      /\\   \\      MODEL%s  %s %s%s\n", bold, reset, sysinfo.modelname, sysinfo.modelversion, reset);
@@ -208,7 +242,7 @@ int main() {
         printf("%s                  UPTIME%s %dd, %dh, %dm%s\n", bold, reset, sysinfo.day, sysinfo.hour, sysinfo.min, reset);
         printf("%s                  %s██%s██%s██%s██%s██%s██%s██%s██%s\n\n", bold, black, red, green, yellow, blue, magenta, cyan, white, reset);
     } else if (strstr(sysinfo.os, "Debian") != NULL) {
-        printf("%s\n                %s%s@%s%s%s\n", bold, sysinfo.username, reset, bold, sysinfo.hostname, reset);
+        printf("%s                %s%s@%s%s%s\n", bold, sysinfo.username, reset, bold, sysinfo.hostname, reset);
         printf("%s                OS%s     %s%s\n", bold, reset, sysinfo.os, reset);
         printf("%s     ,---._     KERNEL%s %s%s\n", bold, reset, sysinfo.kernel, reset);
         printf("%s   /\\`  __ \\\\   MODEL%s  %s %s%s\n", bold, reset, sysinfo.modelname, sysinfo.modelversion, reset);
@@ -220,7 +254,7 @@ int main() {
         printf("%s                UPTIME%s %dd, %dh, %dm%s\n", bold, reset, sysinfo.day, sysinfo.hour, sysinfo.min, reset);
         printf("%s                %s██%s██%s██%s██%s██%s██%s██%s██%s\n\n", bold, black, red, green, yellow, blue, magenta, cyan, white, reset);
     } else if (strstr(sysinfo.os, "Devuan") != NULL) {
-        printf("%s\n                   %s%s@%s%s%s\n", bold, sysinfo.username, reset, bold, sysinfo.hostname, reset);
+        printf("%s                   %s%s@%s%s%s\n", bold, sysinfo.username, reset, bold, sysinfo.hostname, reset);
         printf("%s  -.,              OS%s     %s%s\n", bold, reset, sysinfo.os, reset);
         printf("%s     \\`'-.,        KERNEL%s %s%s\n", bold, reset, sysinfo.kernel, reset);
         printf("%s          \\`':.    MODEL%s  %s %s%s\n", bold, reset, sysinfo.modelname, sysinfo.modelversion, reset);
@@ -232,7 +266,7 @@ int main() {
         printf("%s                   UPTIME%s %dd, %dh, %dm%s\n", bold, reset, sysinfo.day, sysinfo.hour, sysinfo.min, reset);
         printf("%s                   %s██%s██%s██%s██%s██%s██%s██%s██%s\n\n", bold, black, red, green, yellow, blue, magenta, cyan, white, reset);
     } else if (strstr(sysinfo.os, "Elementary") != NULL) {
-        printf("%s\n               %s%s@%s%s%s\n", bold, sysinfo.username, reset, bold, sysinfo.hostname, reset);
+        printf("%s               %s%s@%s%s%s\n", bold, sysinfo.username, reset, bold, sysinfo.hostname, reset);
         printf("%s               OS%s     %s%s\n", bold, reset, sysinfo.os, reset);
         printf("%s    _______    KERNEL%s %s%s\n", bold, reset, sysinfo.kernel, reset);
         printf("%s   /  ___  \\   MODEL%s  %s %s%s\n", bold, reset, sysinfo.modelname, sysinfo.modelversion, reset);
@@ -244,7 +278,7 @@ int main() {
         printf("%s               UPTIME%s %dd, %dh, %dm%s\n", bold, reset, sysinfo.day, sysinfo.hour, sysinfo.min, reset);
         printf("%s               %s██%s██%s██%s██%s██%s██%s██%s██%s\n\n", bold, black, red, green, yellow, blue, magenta, cyan, white, reset);
     } else if (strstr(sysinfo.os, "Fedora") != NULL) {
-        printf("%s\n                  %s%s@%s%s%s\n", bold, sysinfo.username, reset, bold, sysinfo.hostname, reset);
+        printf("%s                  %s%s@%s%s%s\n", bold, sysinfo.username, reset, bold, sysinfo.hostname, reset);
         printf("%s        _____     OS%s     %s%s\n", bold, reset, sysinfo.os, reset);
         printf("%s       /   __)\\   KERNEL%s %s%s\n", bold, reset, sysinfo.kernel, reset);
         printf("%s       |  /  \\ \\  MODEL%s  %s %s%s\n", bold, reset, sysinfo.modelname, sysinfo.modelversion, reset);
@@ -256,7 +290,7 @@ int main() {
         printf("%s   \\(_____/       UPTIME%s %dd, %dh, %dm%s\n", bold, reset, sysinfo.day, sysinfo.hour, sysinfo.min, reset);
         printf("%s                  %s██%s██%s██%s██%s██%s██%s██%s██%s\n\n", bold, black, red, green, yellow, blue, magenta, cyan, white, reset);
     } else if (strstr(sysinfo.os, "Gentoo") != NULL) {
-        printf("%s\n                  %s%s@%s%s%s\n", bold, sysinfo.username, reset, bold, sysinfo.hostname, reset);
+        printf("%s                  %s%s@%s%s%s\n", bold, sysinfo.username, reset, bold, sysinfo.hostname, reset);
         printf("%s    .-----.       OS%s     %s%s\n", bold, reset, sysinfo.os, reset);
         printf("%s  .\\`    _  \\`.   KERNEL%s %s%s\n", bold, reset, sysinfo.kernel, reset);
         printf("%s  \\`.   ()   \\`.  MODEL%s  %s %s%s\n", bold, reset, sysinfo.modelname, sysinfo.modelversion, reset);
@@ -268,7 +302,7 @@ int main() {
         printf("%s                  UPTIME%s %dd, %dh, %dm%s\n", bold, reset, sysinfo.day, sysinfo.hour, sysinfo.min, reset);
         printf("%s                  %s██%s██%s██%s██%s██%s██%s██%s██%s\n\n", bold, black, red, green, yellow, blue, magenta, cyan, white, reset);
     } else if (strstr(sysinfo.os, "Lite") != NULL) {
-        printf("%s\n          %s%s@%s%s%s\n", bold, sysinfo.username, reset, bold, sysinfo.hostname, reset);
+        printf("%s          %s%s@%s%s%s\n", bold, sysinfo.username, reset, bold, sysinfo.hostname, reset);
         printf("%s     /\\   OS%s     %s%s\n", bold, reset, sysinfo.os, reset);
         printf("%s    /  \\  KERNEL%s %s%s\n", bold, reset, sysinfo.kernel, reset);
         printf("%s   / / /  MODEL%s  %s %s%s\n", bold, reset, sysinfo.modelname, sysinfo.modelversion, reset);
@@ -280,7 +314,7 @@ int main() {
         printf("%s          UPTIME%s %dd, %dh, %dm%s\n", bold, reset, sysinfo.day, sysinfo.hour, sysinfo.min, reset);
         printf("%s               %s██%s██%s██%s██%s██%s██%s██%s██%s\n\n", bold, black, red, green, yellow, blue, magenta, cyan, white, reset);
     } else if (strstr(sysinfo.os, "Mint") != NULL) {
-        printf("%s\n                   %s%s@%s%s%s\n", bold, sysinfo.username, reset, bold, sysinfo.hostname, reset);
+        printf("%s                   %s%s@%s%s%s\n", bold, sysinfo.username, reset, bold, sysinfo.hostname, reset);
         printf("%s   _____________   OS%s     %s%s\n", bold, reset, sysinfo.os, reset);
         printf("%s  |_            \\  KERNEL%s %s%s\n", bold, reset, sysinfo.kernel, reset);
         printf("%s    |  |  ___   |  MODEL%s  %s %s%s\n", bold, reset, sysinfo.modelname, sysinfo.modelversion, reset);
@@ -292,7 +326,7 @@ int main() {
         printf("%s                   UPTIME%s %dd, %dh, %dm%s\n", bold, reset, sysinfo.day, sysinfo.hour, sysinfo.min, reset);
         printf("%s                   %s██%s██%s██%s██%s██%s██%s██%s██%s\n\n", bold, black, red, green, yellow, blue, magenta, cyan, white, reset);
     } else if (strstr(sysinfo.os, "Manjaro") != NULL) {
-        printf("%s\n                  %s%s@%s%s%s\n", bold, sysinfo.username, reset, bold, sysinfo.hostname, reset);
+        printf("%s                  %s%s@%s%s%s\n", bold, sysinfo.username, reset, bold, sysinfo.hostname, reset);
         printf("%s  ||||||||| ||||  OS%s     %s%s\n", bold, reset, sysinfo.os, reset);
         printf("%s  ||||||||| ||||  KERNEL%s %s%s\n", bold, reset, sysinfo.kernel, reset);
         printf("%s  ||||      ||||  MODEL%s  %s %s%s\n", bold, reset, sysinfo.modelname, sysinfo.modelversion, reset);
@@ -304,7 +338,7 @@ int main() {
         printf("%s                  UPTIME%s %dd, %dh, %dm%s\n", bold, reset, sysinfo.day, sysinfo.hour, sysinfo.min, reset);
         printf("%s                  %s██%s██%s██%s██%s██%s██%s██%s██%s\n\n", bold, black, red, green, yellow, blue, magenta, cyan, white, reset);
     } else if (strstr(sysinfo.os, "MX") != NULL) {
-        printf("%s\n                %s%s@%s%s%s\n", bold, sysinfo.username, reset, bold, sysinfo.hostname, reset);
+        printf("%s                %s%s@%s%s%s\n", bold, sysinfo.username, reset, bold, sysinfo.hostname, reset);
         printf("%s      \\\\  /     OS%s     %s%s\n", bold, reset, sysinfo.os, reset);
         printf("%s       \\\\/      KERNEL%s %s%s\n", bold, reset, sysinfo.kernel, reset);
         printf("%s        \\\\      MODEL%s  %s %s%s\n", bold, reset, sysinfo.modelname, sysinfo.modelversion, reset);
@@ -316,7 +350,7 @@ int main() {
         printf("%s                UPTIME%s %dd, %dh, %dm%s\n", bold, reset, sysinfo.day, sysinfo.hour, sysinfo.min, reset);
         printf("%s                %s██%s██%s██%s██%s██%s██%s██%s██%s\n\n", bold, black, red, green, yellow, blue, magenta, cyan, white, reset);
     } else if (strstr(sysinfo.os, "SUSE") != NULL) {
-        printf("%s\n                 %s%s@%s%s%s\n", bold, sysinfo.username, reset, bold, sysinfo.hostname, reset);
+        printf("%s                 %s%s@%s%s%s\n", bold, sysinfo.username, reset, bold, sysinfo.hostname, reset);
         printf("%s      _______    OS%s     %s%s\n", bold, reset, sysinfo.os, reset);
         printf("%s  -___|   __ \\   KERNEL%s %s%s\n", bold, reset, sysinfo.kernel, reset);
         printf("%s         / .\\ \\  MODEL%s  %s %s%s\n", bold, reset, sysinfo.modelname, sysinfo.modelversion, reset);
@@ -328,7 +362,7 @@ int main() {
         printf("%s                 UPTIME%s %dd, %dh, %dm%s\n", bold, reset, sysinfo.day, sysinfo.hour, sysinfo.min, reset);
         printf("%s                 %s██%s██%s██%s██%s██%s██%s██%s██%s\n\n", bold, black, red, green, yellow, blue, magenta, cyan, white, reset);
     } else if (strstr(sysinfo.os, "Pop") != NULL) {
-        printf("%s\n                     %s%s@%s%s%s\n", bold, sysinfo.username, reset, bold, sysinfo.hostname, reset);
+        printf("%s                     %s%s@%s%s%s\n", bold, sysinfo.username, reset, bold, sysinfo.hostname, reset);
         printf("%s  ______             OS%s     %s%s\n", bold, reset, sysinfo.os, reset);
         printf("%s  \\   _ \\        __  KERNEL%s %s%s\n", bold, reset, sysinfo.kernel, reset);
         printf("%s   \\ \\ \\ \\      / /  MODEL%s  %s %s%s\n", bold, reset, sysinfo.modelname, sysinfo.modelversion, reset);
@@ -340,7 +374,7 @@ int main() {
         printf("%s    (___________)    UPTIME%s %dd, %dh, %dm%s\n", bold, reset, sysinfo.day, sysinfo.hour, sysinfo.min, reset);
         printf("%s                     %s██%s██%s██%s██%s██%s██%s██%s██%s\n\n", bold, black, red, green, yellow, blue, magenta, cyan, white, reset);
     } else if (strstr(sysinfo.os, "Pure") != NULL) {
-        printf("%s\n                   %s%s@%s%s%s\n", bold, sysinfo.username, reset, bold, sysinfo.hostname, reset);
+        printf("%s                   %s%s@%s%s%s\n", bold, sysinfo.username, reset, bold, sysinfo.hostname, reset);
         printf("%s                   OS%s     %s%s\n", bold, reset, sysinfo.os, reset);
         printf("%s   _____________   KERNEL%s %s%s\n", bold, reset, sysinfo.kernel, reset);
         printf("%s  |  _________  |  MODEL%s  %s %s%s\n", bold, reset, sysinfo.modelname, sysinfo.modelversion, reset);
@@ -352,7 +386,7 @@ int main() {
         printf("%s                   UP TIME%s %dd, %dh, %dm%s\n", bold, reset, sysinfo.day, sysinfo.hour, sysinfo.min, reset);
         printf("%s                   %s██%s██%s██%s██%s██%s██%s██%s██%s\n\n", bold, black, red, green, yellow, blue, magenta, cyan, white, reset);
     } else if (strstr(sysinfo.os, "Raspbian") != NULL) {
-        printf("%s\n              %s%s@%s%s%s\n", bold, sysinfo.username, reset, bold, sysinfo.hostname, reset);
+        printf("%s              %s%s@%s%s%s\n", bold, sysinfo.username, reset, bold, sysinfo.hostname, reset);
         printf("%s              OS%s     %s%s\n", bold, reset, sysinfo.os, reset);
         printf("%s    __  __    KERNEL%s %s%s\n", bold, reset, sysinfo.kernel, reset);
         printf("%s   (_\\)(/_)   MODEL%s  %s %s%s\n", bold, reset, sysinfo.modelname, sysinfo.modelversion, reset);
@@ -364,7 +398,7 @@ int main() {
         printf("%s              UPTIME%s %dd, %dh, %dm%s\n", bold, reset, sysinfo.day, sysinfo.hour, sysinfo.min, reset);
         printf("%s              %s██%s██%s██%s██%s██%s██%s██%s██%s\n\n", bold, black, red, green, yellow, blue, magenta, cyan, white, reset);
     } else if (strstr(sysinfo.os, "Ubuntu") != NULL) {
-        printf("%s\n                %s%s@%s%s%s\n", bold, sysinfo.username, reset, bold, sysinfo.hostname, reset);
+        printf("%s                %s%s@%s%s%s\n", bold, sysinfo.username, reset, bold, sysinfo.hostname, reset);
         printf("%s                OS%s     %s%s\n", bold, reset, sysinfo.os, reset);
         printf("%s           _    KERNEL%s %s%s\n", bold, reset, sysinfo.kernel, reset);
         printf("%s       ---(_)   MODEL%s  %s %s%s\n", bold, reset, sysinfo.modelname, sysinfo.modelversion, reset);
@@ -376,7 +410,7 @@ int main() {
         printf("%s                UPTIME%s %dd, %dh, %dm%s\n", bold, reset, sysinfo.day, sysinfo.hour, sysinfo.min, reset);
         printf("%s                %s██%s██%s██%s██%s██%s██%s██%s██%s\n\n", bold, black, red, green, yellow, blue, magenta, cyan, white, reset);
     } else {
-        printf("%s\n              %s%s@%s%s%s\n", bold, sysinfo.username, reset, bold, sysinfo.hostname, reset);
+        printf("%s              %s%s@%s%s%s\n", bold, sysinfo.username, reset, bold, sysinfo.hostname, reset);
         printf("%s      ___     OS%s     %s%s\n", bold, reset, sysinfo.os, reset);
         printf("%s     (.. |    KERNEL%s %s%s\n", bold, reset, sysinfo.kernel, reset);
         printf("%s     (<> |    MODEL%s  %s %s%s\n", bold, reset, sysinfo.modelname, sysinfo.modelversion, reset);
