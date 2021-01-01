@@ -311,7 +311,7 @@ int main() {
         printf("%s      \\   PKGS%s   ", bold, reset);
         printpkgs();
         printf("%s          UPTIME%s %dd, %dh, %dm%s\n", bold, reset, sysinfo.day, sysinfo.hour, sysinfo.min, reset);
-        printf("%s               %s██%s██%s██%s██%s██%s██%s██%s██%s\n\n", bold, black, red, green, yellow, blue, magenta, cyan, white, reset);
+        printf("%s          %s██%s██%s██%s██%s██%s██%s██%s██%s\n\n", bold, black, red, green, yellow, blue, magenta, cyan, white, reset);
     } else if (strstr(sysinfo.os, "Mint") != NULL) {
         printf("%s                   %s%s@%s%s%s\n", bold, sysinfo.username, reset, bold, sysinfo.hostname, reset);
         printf("%s   _____________   OS%s     %s%s\n", bold, reset, sysinfo.os, reset);
