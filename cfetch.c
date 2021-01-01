@@ -26,7 +26,7 @@
 
 // System information variables.
 struct sysinfo {
-    char username[25], hostname[50], os[50], distro[50], kernel[50], modelname[50], modelversion[50], cpu[50], shell[8];
+    char username[25], hostname[50], os[50], kernel[50], modelname[50], modelversion[50], cpu[50], shell[8];
     int ramused, ramtotal;
     int apt, dnf, emerge, flatpak, kiss, pacman, rpm, snap, yay, yum, zypper;
     int day, hour, min, sec;
@@ -130,7 +130,7 @@ void printpkgs(){
         comma = 1;
     }
     if (sysinfo.emerge != 0) {
-        if (comma = 1) printf(", ");
+        if (comma == 1) printf(", ");
         printf("emerge: %d", sysinfo.emerge);
         comma = 1;
     }
@@ -160,7 +160,7 @@ void printpkgs(){
         comma = 1;
     }
     if (sysinfo.yay != 0) {
-        if (comma = 1) printf(", ");
+        if (comma == 1) printf(", ");
         printf("yay: %d", sysinfo.yay);
         comma = 1;
     }
