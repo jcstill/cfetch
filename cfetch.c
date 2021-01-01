@@ -11,7 +11,7 @@
 #include <stdio.h>
 #include <string.h>
 
-// Colours and text customisation
+// Colours and text customisation.
 #define reset "\x1b[0m"
 #define bold "\x1b[1m"
 #define black "\x1b[30m"
@@ -24,16 +24,16 @@
 #define white "\x1b[37m"
 
 
-// System information variables
+// System information variables.
 struct sysinfo {
     char username[25], hostname[50], os[50], distro[50], kernel[50], modelname[50], modelversion[50], cpu[50], shell[8];
-    int ramused, ramtotal; // ram
-    int apt, dnf, emerge, flatpak, kiss, pacman, rpm, snap, yay, yum, zypper; // packages
-    int day, hour, min, sec; // uptime
+    int ramused, ramtotal;
+    int apt, dnf, emerge, flatpak, kiss, pacman, rpm, snap, yay, yum, zypper;
+    int day, hour, min, sec;
 } sysinfo;
 
-// Gets the current user
-// This will get the current user and the hostname
+// Gets the current user.
+// This will get the current user and the hostname.
 void getuser() {
     FILE *username = popen("echo $USER", "r");
     FILE *hostname = popen("cat /proc/sys/kernel/hostname", "r");
@@ -43,24 +43,24 @@ void getuser() {
     fclose(hostname);
 }
 
-// Gets the distro name
-// This will get the name of the distro
+// Gets the distro name.
+// This will get the name of the distro.
 void getos() {
     FILE *os = popen("if [ $(command -v lsb_release) ];then lsb_release -ds;else cat /etc/*-release | grep 'PRETTY_NAME=' | cut -d '\"' -f2;fi 2>/dev/null", "r");
     fscanf(os, "%[^\n]s", sysinfo.os);
     fclose(os);
 }
 
-// Gets the kernel
-// This will get the kernel-release, kernel-name, and the hardware machin name
+// Gets the kernel.
+// This will get the kernel-release, kernel-name, and the hardware machin name.
 void getkernel() {
     FILE *kernel = popen("uname -rsm", "r");
     fscanf(kernel, "%[^\n]s", sysinfo.kernel);
     fclose(kernel);
 }
 
-// Gets the model information
-// This will get the computer's product name and the product version
+// Gets the model information.
+// This will get the computer's product name and the product version.
 void getmodel() {
     FILE *modelname = fopen("/sys/devices/virtual/dmi/id/product_name", "r");
     FILE *modelversion = fopen("/sys/devices/virtual/dmi/id/product_version", "r");
@@ -70,15 +70,15 @@ void getmodel() {
     fclose(modelversion);
 }
 
-// Gets the shell information
-void Getshell() {
+// Gets the shell information.
+void getshell() {
     FILE *shell = popen("basename $SHELL", "r");
     fscanf(shell, "%s", sysinfo.shell);
     fclose(shell);
 }
 
-// Gets the packages
-// Supports apt, dnf, emerge, flatpak, kiss, pacman, rpm, snap, yay, yum, zypper
+// Gets the packages.
+// Supports apt, dnf, emerge, flatpak, kiss, pacman, rpm, snap, yay, yum, zypper.
 void getpackages() {
     FILE *apt = popen("dpkg-query -f '${binary:Package}\n' -W 2>/dev/null | wc -l", "r");
     FILE *dnf = popen("dnf list installed 2>/dev/null | wc -l", "r");
@@ -116,7 +116,7 @@ void getpackages() {
     fclose(zypper);
 }
 
-// Print the correct packages and names
+// Print the correct packages and names.
 void printpkgs(){
     int comma=0;
     if (sysinfo.apt != 0) {
@@ -178,7 +178,7 @@ void printpkgs(){
     printf("%s\n", reset);
 }
 
-// Gets the CPU information
+// Get the CPU information.
 // lscpu | grep 'Model name:' | sed -r 's/Model name:\\s{1,}//
 // sed -r 's/Model name:\\s{1,}// -> This will remove the 'Model name:', only the CPU will be printed.
 void getcpu() {
@@ -187,8 +187,8 @@ void getcpu() {
     fclose(cpu);
 }
 
-// Gets the RAM information
-// This will show the used RAM / total RAM
+// Get the RAM information.
+// This will show the used RAM / total RAM.
 void getram() {
     FILE *ramused = popen("vmstat -s -S M | grep ' used memory'", "r");
     FILE *ramtotal = popen("vmstat -s -S M | grep ' total memory'", "r");
@@ -198,8 +198,8 @@ void getram() {
     fclose(ramtotal);
 }
 
-// Gets the uptime information
-// This will show how long the computer is running: DDd, HHh, MMm
+// Get the uptime information.
+// This will show how long the computer is running: DDd, HHh, MMm.
 void getuptime() {
     FILE *uptime = fopen("/proc/uptime", "r");
     fscanf(uptime, "%d", &sysinfo.sec);
@@ -210,14 +210,13 @@ void getuptime() {
     sysinfo.min = (sysinfo.sec/60%60);
 }
 
-// Call all functions
-// This will call of the functions that Gets the system information
-void Getsysinfo() {
+// Call all functions that gets the system information.
+void getsysinfo() {
     getuser();
     getos();
     getmodel();
     getkernel();
-    Getshell();
+    getshell();
     getpackages();
     getcpu();
     getram();
@@ -225,10 +224,10 @@ void Getsysinfo() {
 }
 
 int main() {
-    Getsysinfo();
+    getsysinfo();
 
-    // Do not change these
-    // user, os, kernel, model, cpu, ram, shell, pkgs, uptime, palette colours
+    // Do not change these.
+    // user, os, kernel, model, cpu, ram, shell, pkgs, uptime, palette colours.
     if (strstr(sysinfo.os, "Arch") != NULL) {
         printf("%s                  %s%s@%s%s%s\n", bold, sysinfo.username, reset, bold, sysinfo.hostname, reset);
         printf("%s        /\\        OS%s     %s%s\n", bold, reset, sysinfo.os, reset);
