@@ -1,5 +1,5 @@
 # cfetch
-A tiny system information tool for Linux.
+A simple system information tool for Linux.
 
 ![cfetch](https://raw.githubusercontent.com/clieg/clieg.github.io/master/images/cfetch-new.png)
 
