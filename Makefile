@@ -1,10 +1,3 @@
-# Clean cfetch binary.
-clean:
-	@echo "Cleaning..."
-	rm -rf cfetch
-	@echo "Finished!";
-
-
 # Compile cfetch
 compile:
 	@echo "Compiling cfetch..."
@@ -26,3 +19,10 @@ uninstall:
 	@echo "Uninstalling cfetch..."
 	rm -rf /usr/bin/cfetch
 	@echo "Uninstalling finished!"
+
+
+# Clean cfetch binary.
+clean:
+	@echo "Cleaning..."
+	rm -rf cfetch
+	@echo "Finished!";
