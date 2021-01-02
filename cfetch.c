@@ -47,7 +47,7 @@ void getuser() {
 // This will get the name of the distro
 void getos() {
     FILE *os = popen("if [ $(command -v lsb_release) ];then lsb_release -ds;else cat /etc/*-release | grep 'PRETTY_NAME=' | cut -d '\"' -f2;fi 2>/dev/null", "r");
-    fscanf(os, "%[^\n]s", sysinfo.os);
+    fscanf(os, "%[^\n]", sysinfo.os);
     fclose(os);
 }
 
@@ -55,7 +55,7 @@ void getos() {
 // This will get the kernel-release, kernel-name, and the hardware machin name
 void getkernel() {
     FILE *kernel = popen("uname -rsm", "r");
-    fscanf(kernel, "%[^\n]s", sysinfo.kernel);
+    fscanf(kernel, "%[^\n]", sysinfo.kernel);
     fclose(kernel);
 }
 
@@ -64,7 +64,7 @@ void getkernel() {
 void getmodel() {
     FILE *modelname = fopen("/sys/devices/virtual/dmi/id/product_name", "r");
     FILE *modelversion = fopen("/sys/devices/virtual/dmi/id/product_version", "r");
-    fscanf(modelname, "%[^\n]s", sysinfo.modelname);
+    fscanf(modelname, "%[^\n]", sysinfo.modelname);
     fscanf(modelversion, "%s", sysinfo.modelversion);
     fclose(modelname);
     fclose(modelversion);
@@ -210,7 +210,7 @@ void printpkgs(){
 // sed -r 's/Model name:\\s{1,}// -> This will remove the 'Model name:', only the CPU will be printed.
 void getcpu() {
     FILE *cpu = popen("lscpu | grep 'Model name:' | sed -r 's/Model name:\\s{1,}//'", "r");
-    fscanf(cpu, "%[^\n]s", sysinfo.cpu);
+    fscanf(cpu, "%[^\n]", sysinfo.cpu);
     fclose(cpu);
 }
 
