@@ -23,6 +23,9 @@ sudo make install
 # Run cfetch
 cfetch
 
+# Manpage
+man cfetch
+
 # Uninstall cfetch
 sudo make uninstall
 ```
