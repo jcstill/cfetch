@@ -145,7 +145,7 @@ void printpkgs(){
         comma = 1;
     }
     if (sysinfo.emerge != 0) {
-        if (comma = 1) printf(", ");
+        if (comma == 1) printf(", ");
         printf("emerge: %d", sysinfo.emerge);
         comma = 1;
     }
@@ -187,7 +187,7 @@ void printpkgs(){
     }
 
     if (sysinfo.yay != 0) {
-        if (comma = 1) printf(", ");
+        if (comma == 1) printf(", ");
         printf("yay: %d", sysinfo.yay);
         comma = 1;
     }
